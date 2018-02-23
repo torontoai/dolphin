@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang=”en-GB”>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>{{title}}</title>
+    <link rel="shortcut icon" href="https://www.dwyl.io/images/favicon.ico" type="image/x-icon">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+          crossorigin="anonymous">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <script type='text/javascript' src='bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js'></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+  </head>
+
+  <body class='center'>
+    <script>
+     function change(id) {
+       var vvv = document.getElementById(id).value
+       alert("Hello: " + vvv);
+       if (vvv == "yes"){
+         var x = document.getElementById(id).value = "no";
+         alert("i have " + x);
+       } else {
+         var x = document.getElementById(id).value = "yes";
+         alert("i have " + x);
+
+       }
+     };
+
+     function ft(id){
+       if (document.getElementById(id).checked)
+         {
+           var x = document.getElementById(id).value = "yes";
+           alert("i have " + x);
+         }
+       else{
+         var x = document.getElementById(id).value = "no";
+         alert("i have " + x);
+       }
+     };
+    </script>
+    <style>
+     body {
+       margin-top:0.3em
+     }
+     .center {
+       margin: auto;
+       width: 90%;
+       padding: 10px;
+     }
+     .form-control {
+       font-size: 1.5em;
+       height: 1.8em;
+     }
+     .input-error {
+       border: #ffcdd2 solid 3px;
+       background-color: #ffebee;
+     }
+     .help-block {
+       font-size: 1em;
+       color: #e74c3c;
+     }
+     .required-field {
+       color: red;
+       font-size: 1.3em;
+     }
+    </style>
+    <login>
+      <h3>欢迎查询!</h3>
+      <h4>请添信息以便查询签证通过概率！</h4>
+      <br>
+      <form class="form-horizontal" action="/register" method="POST">
+
+        <div class="form-group">
+          <label for="name" class="col-sm-2 control-label">您的名字 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.name.class}}" required
+                   id="name" name="name" placeholder="-" value="{{values.name}}">
+            <p class='help-block'>{{error.name.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="history" class="col-sm-2 control-label">是否有北美（加拿大或美国）的签证历史 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.history.class}}"
+                   id="history" name="history" value="yes" onchange="ft('history')"
+                   type="checkbox" checked data-toggle="toggle" data-on="是" data-off="否" data-onstyle="info">
+            <p class='help-block'>{{error.history.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="language" class="col-sm-2 control-label">语言成绩 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.language.class}}" required
+                   id="language" name="language" placeholder="IELTS:1-9 or TOEFL: 20-120" value="{{values.language}}">
+            <p class='help-block'>{{error.language.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="plan" class="col-sm-2 control-label">学习计划是否与教育背景相符 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.plan.class}}"
+                   id="plan" name="plan" value="yes" onchange="ft('plan')"
+                   type="checkbox" checked data-toggle="toggle" data-on="是" data-off="否" data-onstyle="info">
+            <p class='help-block'>{{error.plan.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="deposit" class="col-sm-2 control-label">银行存款年限 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.email.class}}" required
+                   id="deposit" name="deposit" placeholder="年" value="{{values.deposit}}">
+            <p class='help-block'>{{error.deposit.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="asset" class="col-sm-2 control-label">家庭净资产 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.asset.class}}" required
+                   id="asset" name="asset" placeholder="人民币，万为单位" value="{{values.asset}}">
+            <p class='help-block'>{{error.asset.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="validation" class="col-sm-2 control-label">是否能提供父母收入来源信息 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.validation.class}}"
+                   id="validation" name="validation" value="yes" onchange="ft('validation')"
+                   type="checkbox" checked data-toggle="toggle" data-on="是" data-off="否" data-onstyle="info">
+            <p class='help-block'>{{error.validation.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="col-sm-2 control-label">Email 以方便联系<span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.email.class}}" required
+                   id="email" name="email" placeholder="Email" value="{{values.email}}">
+            <p class='help-block'>{{error.email.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group pull-right">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn-success btn btn-lg">查询</button>
+          </div>
+        </div>
+      </form>
+    </login>
+  </body>
+
+</html>
