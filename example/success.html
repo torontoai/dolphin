@@ -7,9 +7,75 @@
     <link rel="shortcut icon" href="https://www.dwyl.io/images/favicon.ico" type="image/x-icon">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
           crossorigin="anonymous">
+    <style>
+     /* Center the loader */
+     #loader {
+       position: absolute;
+       left: 50%;
+       top: 50%;
+       z-index: 1;
+       width: 150px;
+       height: 150px;
+       margin: -75px 0 0 -75px;
+       border: 16px solid #f3f3f3;
+       border-radius: 50%;
+       border-top: 16px solid #3498db;
+       width: 120px;
+       height: 120px;
+       -webkit-animation: spin 2s linear infinite;
+       animation: spin 2s linear infinite;
+     }
+
+     @-webkit-keyframes spin {
+       0% { -webkit-transform: rotate(0deg); }
+       100% { -webkit-transform: rotate(360deg); }
+     }
+
+     @keyframes spin {
+       0% { transform: rotate(0deg); }
+       100% { transform: rotate(360deg); }
+     }
+
+     /* Add animation to "page content" */
+     .animate-bottom {
+       position: relative;
+       -webkit-animation-name: animatebottom;
+       -webkit-animation-duration: 1s;
+       animation-name: animatebottom;
+       animation-duration: 1s
+     }
+
+     @-webkit-keyframes animatebottom {
+       from { bottom:-100px; opacity:0 }
+       to { bottom:0px; opacity:1 }
+     }
+
+     @keyframes animatebottom {
+       from{ bottom:-100px; opacity:0 }
+       to{ bottom:0; opacity:1 }
+     }
+
+     #myDiv {
+       display: none;
+       text-align: center;
+     }
+    </style>
   </head>
 
-  <body class='center'>
+  <body onload="spin()" class='center'>
+    <script>
+     var myVar;
+
+     function spin() {
+       myVar = setTimeout(showPage, 3000);
+     }
+
+     function showPage() {
+       document.getElementById("loader").style.display = "none";
+       document.getElementById("loadertext").style.display = "none";
+       document.getElementById("myDiv").style.display = "block";
+     }
+    </script>
     <style>
      body {
        margin-top:0.3em
@@ -24,14 +90,20 @@
        font-weight: bold;
      }
     </style>
-    <h3>{{name}}, 欢迎您！</h3>
-    <h4> 您签证通过率为 80%
-      <!--
-           <span class="rr">{{email}}</span>
-      -->
-    </h4>
-    <h5>请查询您的email
-      <span class="email">{{email}}</span>!
-    </h5>
+    <div id="loader"></div>
+    <div id="loadertext"><h3>云端正在为您智能计算， 请稍后！</h3></div>
+
+
+    <div style="display:none;" id="myDiv" class="animate-bottom">
+      <h3>{{name}}, 欢迎您！</h3>
+      <h4> 您签证通过率为 {{finalscore}}%
+        <!--
+             <span class="rr">{{email}}</span>
+        -->
+      </h4>
+      <h5>请查询您的email
+        <span class="email">{{email}}</span>!
+      </h5>
+    </div>
   </body>
 </html>

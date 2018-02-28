@@ -37,6 +37,52 @@ function return_form_input_values(error) {
     return values;
 }
 
+function score(asset, deposit, language, validation, history, plan) {
+    assetscore = 0;
+    depositscore = 0;
+    languagescore = 0;
+    validationscore = 0;
+    historyscore = 0;
+    planscore = 0;
+
+    finalscore = 0;
+
+    if (asset && asset > 80) {
+        assetscore = 16 }
+    else {
+        assetscore = 5;}
+
+    if (deposit && deposit > 30) {
+        depositscore = 16 }
+    else {
+        depositscore = 5;}
+
+    if (language && (language > 72 || (language <= 12 && language >=5.5))) {
+        languagescore = 16 }
+    else {
+        languagescore = 5;}
+
+    if (validation && validation == "yes") {
+        validationscore = 16 }
+    else {
+        validationscore = 5;}
+
+    if (history && history == "yes") {
+        historyscore = 16 }
+    else {
+        historyscore = 5;}
+
+    if (plan && plan == "yes") {
+        planscore = 16 }
+    else {
+        planscore = 5;}
+
+    finalscore = assetscore + depositscore + languagescore + validationscore + historyscore + planscore;
+
+    console.log("Hello, world!" + finalscore);
+    return finalscore;
+}
+
 /**
  * register_handler is a dual-purpose handler that initially renders
  * the registration form but is re-used to display the form with any
@@ -83,9 +129,12 @@ function register_handler(request, reply, source, error) {
             ip = request.ip;
         }
 
+        finalscore = score(request.payload.asset, request.payload.deposit, request.payload.language, request.payload.validation, request.payload.history, request.payload.plan);
+
         return reply.view('success', {
             name   : validator.escape(request.payload.name),
-            email  : validator.escape(request.payload.email)
+            email  : validator.escape(request.payload.email),
+            finalscore : finalscore,
         })
     }
 }
