@@ -1,4 +1,8 @@
 var validator = require('validator'); // github.com/chriso/validator.js
+var azure = require('azure-storage');
+
+//global.db = (global.db ? azure.createBlobService());
+global.db = azure.createBlobService();
 
 /**
  * extract_validation_error does what its name suggests
@@ -108,14 +112,6 @@ function register_handler(request, reply, source, error) {
         }).code(error ? 400 : 200);
     }
     else { // once successful, show welcome message!
-        console.log('hello world');
-        console.log('request.payload.asset: ' + request.payload.asset);
-        console.log('deposit: ' + request.payload.deposit);
-        console.log('language: ' + request.payload.language);
-        console.log('validation: ' + request.payload.validation);
-        console.log('history: ' + request.payload.history);
-        console.log('plan: ' + request.payload.plan);
-
         var ip;
         if (request.headers['x-forwarded-for']) {
             ip = request.headers['x-forwarded-for'].split(",")[0];
@@ -128,6 +124,35 @@ function register_handler(request, reply, source, error) {
         } else {
             ip = request.ip;
         }
+
+        var data = {
+            name: request.payload.name,
+            history: request.payload.history,
+            language: request.payload.language,
+            plan: request.payload.plan,
+            deposit: request.payload.deposit,
+            asset: request.payload.asset,
+            validation: request.payload.validation,
+            email: request.payload.email,
+            timestamp: Date.now(),
+            ip: ip
+        }
+
+        var jdata = JSON.stringify(data);
+
+        console.log('data: ' + jdata);
+
+        global.db.createContainerIfNotExists('visainfo', function(error, result, response){
+            if(!error){
+                console.log('Error for create container: ' + error);
+            }
+        });
+
+        global.db.appendFromText('visainfo', 'appendblob', jdata, function(error, result, response){
+            if(!error){
+                console.log('Error for create container: ' + error);
+            }
+        });
 
         finalscore = score(request.payload.asset, request.payload.deposit, request.payload.language, request.payload.validation, request.payload.history, request.payload.plan);
 
