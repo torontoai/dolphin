@@ -2,7 +2,7 @@ var validator = require('validator'); // github.com/chriso/validator.js
 var azure = require('azure-storage');
 
 //global.db = (global.db ? azure.createBlobService());
-global.db = azure.createBlobService();
+//global.db = azure.createBlobService();
 
 /**
  * extract_validation_error does what its name suggests
@@ -41,11 +41,10 @@ function return_form_input_values(error) {
     return values;
 }
 
-function score(asset, deposit, language, validation, history, plan) {
+function score(asset, personincome, language, history, plan) {
     assetscore = 0;
-    depositscore = 0;
+    personincomescore = 0;
     languagescore = 0;
-    validationscore = 0;
     historyscore = 0;
     planscore = 0;
 
@@ -56,20 +55,20 @@ function score(asset, deposit, language, validation, history, plan) {
     else {
         assetscore = 5;}
 
-    if (deposit && deposit > 30) {
-        depositscore = 16 }
+    if (personincome && personincome > 30) {
+        personincomescore = 16 }
     else {
-        depositscore = 5;}
+        personincomescore = 5;}
 
     if (language && (language > 72 || (language <= 12 && language >=5.5))) {
         languagescore = 16 }
     else {
         languagescore = 5;}
 
-    if (validation && validation == "yes") {
-        validationscore = 16 }
-    else {
-        validationscore = 5;}
+    // if (validation && validation == "yes") {
+    //     validationscore = 16 }
+    // else {
+    //     validationscore = 5;}
 
     if (history && history == "yes") {
         historyscore = 16 }
@@ -81,7 +80,7 @@ function score(asset, deposit, language, validation, history, plan) {
     else {
         planscore = 5;}
 
-    finalscore = assetscore + depositscore + languagescore + validationscore + historyscore + planscore;
+    finalscore = assetscore + personincomescore + languagescore + historyscore + planscore;
 
     console.log("Hello, world!" + finalscore);
     return finalscore;
@@ -127,13 +126,18 @@ function register_handler(request, reply, source, error) {
 
         var data = {
             name: request.payload.name,
+            age: request.payload.age,
+            workexperience: request.payload.workexperience,
+            degree: request.payload.degree,
             history: request.payload.history,
             language: request.payload.language,
             plan: request.payload.plan,
-            deposit: request.payload.deposit,
+            personincome: request.payload.personincome,
+            parentincome: request.payload.parentincome,
+            expectmajor: request.payload.expectmajor,
             asset: request.payload.asset,
-            validation: request.payload.validation,
             email: request.payload.email,
+            refuse: request.payload.refuse,
             timestamp: Date.now(),
             ip: ip
         }
@@ -142,19 +146,19 @@ function register_handler(request, reply, source, error) {
 
         console.log('data: ' + jdata);
 
-        global.db.createContainerIfNotExists('visainfo', function(error, result, response){
-            if(!error){
-                console.log('Error for create container: ' + error);
-            }
-        });
+        // global.db.createContainerIfNotExists('visainfo', function(error, result, response){
+        //     if(!error){
+        //         console.log('Error for create container: ' + error);
+        //     }
+        // });
 
-        global.db.appendFromText('visainfo', 'appendblob', jdata, function(error, result, response){
-            if(!error){
-                console.log('Error for create container: ' + error);
-            }
-        });
+        // global.db.appendFromText('visainfo', 'appendblob', jdata, function(error, result, response){
+        //     if(!error){
+        //         console.log('Error for create container: ' + error);
+        //     }
+        // });
 
-        finalscore = score(request.payload.asset, request.payload.deposit, request.payload.language, request.payload.validation, request.payload.history, request.payload.plan);
+        finalscore = score(request.payload.asset, request.payload.personincome, request.payload.language, request.payload.history, request.payload.plan);
 
         return reply.view('success', {
             name   : validator.escape(request.payload.name),

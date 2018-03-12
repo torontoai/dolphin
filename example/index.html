@@ -24,14 +24,10 @@
     <script>
      function change(id) {
        var vvv = document.getElementById(id).value
-       alert("Hello: " + vvv);
        if (vvv == "yes"){
          var x = document.getElementById(id).value = "no";
-         alert("i have " + x);
        } else {
          var x = document.getElementById(id).value = "yes";
-         alert("i have " + x);
-
        }
      };
 
@@ -89,6 +85,24 @@
         </div>
 
         <div class="form-group">
+          <label for="age" class="col-sm-2 control-label">年龄 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.age.class}}" required
+                   id="age" name="age" value="{{values.age}}">
+            <p class='help-block'>{{error.age.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="workexperience" class="col-sm-2 control-label">工作经验 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.workexperience.class}}" required
+                   id="workexperience" name="workexperience" placeholder="年" value="{{values.workexperience}}">
+            <p class='help-block'>{{error.workexperience.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
           <label for="history" class="col-sm-2 control-label">是否有北美（加拿大或美国）的签证历史 <span class="required-field">*</span></label>
           <div class="col-sm-10">
             <input class="form-control {{error.history.class}}"
@@ -118,16 +132,57 @@
         </div>
 
         <div class="form-group">
-          <label for="deposit" class="col-sm-2 control-label">银行存款数额（存款历史在2年以上） <span class="required-field">*</span></label>
+          <label for="personincome" class="col-sm-2 control-label">个人年收入 <span class="required-field">*</span></label>
           <div class="col-sm-10">
-            <input class="form-control {{error.email.class}}" required
-                   id="deposit" name="deposit" placeholder="年" value="{{values.deposit}}">
-            <p class='help-block'>{{error.deposit.message}}</p>
+            <input class="form-control {{error.personincome.class}}" required
+                   id="personincome" name="personincome" placeholder="万为单位" value="{{values.personincome}}">
+            <p class='help-block'>{{error.personincome.message}}</p>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="asset" class="col-sm-2 control-label">家庭净资产 <span class="required-field">*</span></label>
+          <label for="parentincome" class="col-sm-2 control-label">父母年收入 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <input class="form-control {{error.parentincome.class}}" required
+                   id="parentincome" name="parentincome" placeholder="万为单位" value="{{values.parentincome}}">
+            <p class='help-block'>{{error.parentincome.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="degree" class="col-sm-2 control-label">学历 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <select id="degree" class="form-control {{error.degree.class}}"
+                    name="degree" value="{{values.degree}}">
+              <option value="junior">小学</option>
+              <option value="middle">中学</option>
+              <option value="high">高中</option>
+              <option value="college">大专</option>
+              <option value="graduate">本科</option>
+              <option value="master">研究生</option>
+              <option value="phd">博士</option>
+            </select>
+            <p class='help-block'>{{error.degree.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="expectmajor" class="col-sm-2 control-label">预读专业 <span class="required-field">*</span></label>
+          <div class="col-sm-10">
+            <select id="expectmajor" class="form-control {{error.expectmajor.class}}"
+                    name="expectmajor" value="{{values.expectmajor}}">
+              <option value="eng">Engineering</option>
+              <option value="ah">Arts and Humanities</option>
+              <option value="ns">Natural Sciences</option>
+              <option value="ss">Social Sciences</option>
+              <option value="mba">MBA</option>
+            </select>
+            <p class='help-block'>{{error.expectmajor.message}}</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="asset" class="col-sm-2 control-label">家庭超过1年的银行存款 <span class="required-field">*</span></label>
           <div class="col-sm-10">
             <input class="form-control {{error.asset.class}}" required
                    id="asset" name="asset" placeholder="人民币，万为单位" value="{{values.asset}}">
@@ -135,13 +190,15 @@
           </div>
         </div>
 
+
+
         <div class="form-group">
-          <label for="validation" class="col-sm-2 control-label">能否提供父母收入来源信息 <span class="required-field">*</span></label>
+          <label for="refuse" class="col-sm-2 control-label">能否有加拿大/美国拒签史 <span class="required-field">*</span></label>
           <div class="col-sm-10">
-            <input class="form-control {{error.validation.class}}"
-                   id="validation" name="validation" value="yes" onchange="ft('validation')"
+            <input class="form-control {{error.refuse.class}}"
+                   id="refuse" name="refuse" value="yes" onchange="ft('refuse')"
                    type="checkbox" checked data-toggle="toggle" data-on="是" data-off="否" data-onstyle="info">
-            <p class='help-block'>{{error.validation.message}}</p>
+            <p class='help-block'>{{error.refuse.message}}</p>
           </div>
         </div>
 
