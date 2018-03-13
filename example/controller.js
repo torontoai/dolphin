@@ -2,7 +2,7 @@ var validator = require('validator'); // github.com/chriso/validator.js
 var azure = require('azure-storage');
 
 //global.db = (global.db ? azure.createBlobService());
-//global.db = azure.createBlobService();
+global.db = azure.createBlobService();
 
 /**
  * extract_validation_error does what its name suggests
@@ -126,6 +126,7 @@ function register_handler(request, reply, source, error) {
 
         var data = {
             name: request.payload.name,
+            province : request.payload.province,
             age: request.payload.age,
             workexperience: request.payload.workexperience,
             degree: request.payload.degree,
@@ -152,11 +153,11 @@ function register_handler(request, reply, source, error) {
         //     }
         // });
 
-        // global.db.appendFromText('visainfo', 'appendblob', jdata, function(error, result, response){
-        //     if(!error){
-        //         console.log('Error for create container: ' + error);
-        //     }
-        // });
+        global.db.appendFromText('visainfo', 'appendblob', jdata, function(error, result, response){
+            if(!error){
+                console.log('Error for create container: ' + error);
+            }
+        });
 
         finalscore = score(request.payload.asset, request.payload.personincome, request.payload.language, request.payload.history, request.payload.plan);
 

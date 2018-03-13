@@ -1,6 +1,7 @@
 var Joi = require('joi');
 var custom_fields = {
     name  : Joi.string().required(),
+    province : Joi.string(),
     age : Joi.number().required(),
     workexperience : Joi.number().required(),
     degree : Joi.string(),
